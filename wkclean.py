@@ -5,10 +5,10 @@ import json
 client = MongoClient('mongodb://localhost:27017/')
 db = client.fantasypros
 
-html_page = "fantasy_fb_leaders_2014.html"
 
 
-def extract_data(page):
+
+def extract_data(page, yr, wk):
     with open(page, 'rU') as html:
         #text = html.read()
         soup = BeautifulSoup(html.read())
@@ -30,15 +30,17 @@ def extract_data(page):
             player_dict['team'] = str(cells[2].find(text=True))
             player_dict['position'] = str(cells[3].find(text=True))
             player_dict['total_points'] = float(cells[4].find(text=True))
-            player_dict['num_games_played'] = str(cells[5].find(text=True))
-            player_dict['season_avg_points'] = float(cells[6].find(text=True))
-            player_dict['season'] = '2014'
+            player_dict['week'] = str(wk)
+            player_dict['season'] = str(yr)
             #insert player in db
             add_player(player_dict)
             print player_dict
 
 def add_player(player):
-    db.leaders.insert(player)
+    db.playersbywk.insert(player)
 
 if __name__ == '__main__':
-    extract_data(html_page)
+    for yr in range(2012, 2015):
+        for wk in range(1, 18):
+            html_page = "fantasy_fb_stats_" + str(yr) + "_wk" + str(wk) + ".html"
+            extract_data(html_page, yr, wk)
