@@ -1,2 +1,2 @@
-# pyspace
+# pyrandom
 Random python code
