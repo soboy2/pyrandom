@@ -42,5 +42,5 @@ def add_player(player):
 if __name__ == '__main__':
     for yr in range(2012, 2015):
         for wk in range(1, 18):
-            html_page = "fantasy_fb_stats_" + str(yr) + "_wk" + str(wk) + ".html"
+            html_page = "fbhtml/fantasy_fb_stats_" + str(yr) + "_wk" + str(wk) + ".html"
             extract_data(html_page, yr, wk)

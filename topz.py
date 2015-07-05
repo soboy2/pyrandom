@@ -7,10 +7,11 @@ db = client.fantasypros
 def findTop(position, mean):
     print(mean)
     projection = {"_id": 0, "coeff_var": 1, "mean": 1, "name": 1}
-    query = {"position": position, "mean":{"$gte": mean}, "coeff_var":{"$lte": "0.60"}}
-    players = db.players.find(query, projection).sort([("coeff_var", 1)]).limit(20)
+    query = {"position": position,  "coeff_var":{"$gte":"", "$lte": "0.60"}, "mean":{"$gte": mean}}
+    players = db.players.find(query, projection).sort([("coeff_var", 1)]).limit(25)
     for player in players:
-        print(player["name"] + " " + player["mean"] + " " + player["coeff_var"])
+        if float(player["mean"]) > float(mean):
+            print(player["name"] + " " + player["mean"] + " " + player["coeff_var"])
 
 
 
